@@ -1,0 +1,47 @@
+{
+  "name": "swatang-backend-api",
+  "version": "1.0.0",
+  "description": "Swatang Backend API",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@gitlab.mowede.com:30022/mow/swatang-backend.git"
+  },
+  "engines": {
+    "node": ">=8.3.0"
+  },
+  "scripts": {
+    "start": "node ./server.js",
+    "start-dev": "nodemon ./server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "eslint-check": "eslint --print-config . | eslint-config-prettier-check"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "crypto": "^1.0.1",
+    "express": "^4.16.3",
+    "express-jwt": "^5.3.1",
+    "express-jwt-blacklist": "^1.1.0",
+    "jsonwebtoken": "^8.2.2",
+    "mongodb": "^3.0.10",
+    "mongoose": "^5.12.10",
+    "nodemailer": "^4.7.0",
+    "path-to-regexp": "^2.4.0",
+    "pug": "^2.0.3",
+    "rootpath": "^0.1.2",
+    "url": "^0.11.0",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^5.11.1",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-config-recommended": "^4.0.0",
+    "eslint-plugin-node": "^8.0.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "nodemon": "^1.17.5",
+    "prettier": "^1.15.3"
+  }
+}
