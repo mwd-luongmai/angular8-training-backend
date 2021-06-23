@@ -12,16 +12,16 @@ function sendMailWithResetPasswordLink(toAddress, username, resetUrl) {
   const transporter = nodemailer.createTransport({
     service: config.emailServer.service,
     auth: {
-      user: cryptoUtils.decrypt(config.emailServer.username),
-      pass: cryptoUtils.decrypt(config.emailServer.password),
+      user: "swatangdnvn@gmail.com",
+      pass: "ren#123@123",
     },
   });
 
   const mailOptions = {
-    from: config.emailServer.username,
+    from: "swatangdnvn@gmail.com",
     to: toAddress,
     subject: config.emailServer.resetPasswordSubject,
-    html: pug.renderFile('templates/forgot-password-email.pug', {
+    html: pug.renderFile("templates/forgot-password-email.pug", {
       name: username,
       url: resetUrl,
     }),
@@ -38,13 +38,13 @@ function sendMailWithActiveLink(toAddress, username, resetUrl) {
   const transporter = nodemailer.createTransport({
     service: config.emailServer.service,
     auth: {
-      user: cryptoUtils.decrypt(config.emailServer.username),
-      pass: cryptoUtils.decrypt(config.emailServer.password),
+      user: "swatangdnvn@gmail.com",
+      pass: "ren#123@123",
     },
   });
 
   const mailOptions = {
-    from: config.emailServer.username,
+    from: "swatangdnvn@gmail.com",
     to: toAddress,
     subject: config.emailServer.activeUserSubject,
     html: pug.renderFile("templates/active-email.pug", {
