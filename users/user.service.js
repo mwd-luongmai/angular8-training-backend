@@ -17,6 +17,7 @@ module.exports = {
   update,
   changePass,
   deleteAccount,
+  active,
   deactivate,
   search: search,
   forgotPassword,
@@ -71,6 +72,7 @@ async function create(userParam) {
   }
 
   const newUser = new User(userParam);
+  newUser.active = false
   const passwordHashResult = hashUtils.saltHashPassword(userParam.password);
 
   // hash password
@@ -80,7 +82,16 @@ async function create(userParam) {
   }
 
   // save user
-  await newUser.save();
+  await newUser.save((err, user) => {
+    const address = url.parse(userParam.url, true);
+    const resetUrl =
+      address.protocol + "//" + address.host + "/user/active/" + user.id;
+    emailUtils.sendMailWithActiveLink(
+      userParam.email,
+      user.username,
+      resetUrl
+    );
+  });
 }
 
 async function update(id, userParam) {
@@ -154,6 +165,20 @@ async function deactivate(id) {
   });
 
   await user.save();
+}
+
+async function active(id){
+  const user = await User.findById(id);
+
+  if(!user){
+    throw 'User not found';
+  }
+
+  user.set({
+    active: true
+  });
+
+  await user.save()
 }
 
 async function search(key, method) {

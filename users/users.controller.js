@@ -16,6 +16,7 @@ router.delete('/deleteAccount', deleteAccount);
 router.put('/:id/deactivate', deactivate);
 router.get('/search/:key/:method', search);
 router.post('/reset-password', resetPassword);
+router.put('/:id/active', active);
 
 module.exports = router;
 
@@ -93,6 +94,13 @@ function deactivate(req, res, next) {
     .deactivate(req.params.id)
     .then(() => res.json({}))
     .catch(err => next(err));
+}
+
+function active(req, res, next){
+  userService
+    .active(req.params.id)
+    .then(() => res.json({}))
+    .catch(err => next(err))
 }
 
 function forgotPassword(req, res, next) {
