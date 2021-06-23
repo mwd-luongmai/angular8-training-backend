@@ -3,9 +3,10 @@
   "secret": "THIS IS USED TO SIGN AND VERIFY JWT TOKENS, REPLACE IT WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
   "emailServer": {
     "service": "gmail",
-    "username": "0a219e0f5922dc9415b2e02e682edf13e6",
-    "password": "2a63cb4f1f6f9df00b",
-    "resetPasswordSubject": "[SWATANG] - Forgot Password Email"
+    "username": "1f2090184b3bc8bd5cbbef316a40db11eaa0c16a3be6ee",
+    "password": "013091361d649af743edb2",
+    "resetPasswordSubject": "[SWATANG] - Forgot Password Email",
+    "activeUserSubject": "[SWATANG] - Active Account Email"
   },
   "crypto": {
     "algorithm": "aes-256-ctr",
