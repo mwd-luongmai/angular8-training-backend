@@ -15,6 +15,10 @@ function jwt() {
       "/users/register",
       "/users/forgot-password",
       "/users/reset-password",
+      "/",
+      "/skills/add-skill",
+      new RegExp("/skills/.*", "i"),
+      "/skills",
       new RegExp("/users/.*/active", "i"),
     ],
   });
