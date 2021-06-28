@@ -24,6 +24,11 @@ app.use(jwt());
 
 // api routes
 app.use('/users', require('./users/users.controller'));
+app.use('/skills', require('./skills/skill.controller'));
+
+app.get('/', (req, res) => {
+  res.send('Backend is runing')
+})
 
 // global error handler
 app.use(errorHandler);
