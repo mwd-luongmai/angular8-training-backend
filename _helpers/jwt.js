@@ -20,6 +20,8 @@ function jwt() {
       new RegExp("/skills/.*", "i"),
       "/skills",
       new RegExp("/users/.*/active", "i"),
+      "/users",
+      new RegExp("/users/skills/.*", "i")
     ],
   });
 }

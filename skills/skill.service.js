@@ -11,7 +11,8 @@ module.exports = {
   addSkillProfile,
   getAllSkills,
   getById,
-  update
+  update,
+  searchSkill
 };
 
 async function addSkillProfile(skillObject) {
@@ -28,6 +29,10 @@ async function addSkillProfile(skillObject) {
 
 async function getAllSkills() {
   return await Skill.find({});
+}
+
+async function searchSkill(skillName) {
+  return await Skill.find({ "skillName": { $regex: '.*' + skillName + '.*' }});
 }
 
 async function getById(id) {

