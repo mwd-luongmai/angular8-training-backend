@@ -17,6 +17,10 @@ router.put('/:id/deactivate', deactivate);
 router.get('/search/:key/:method', search);
 router.post('/reset-password', resetPassword);
 router.put('/:id/active', active);
+router.put('/assign-skill/:skillId/:levelId/:userid', assignSkill);
+router.put('/update-skill/:id/:skillId/:levelId/:userid', updateSkill);
+router.put('/remove-skill/:skillId/:userid', removeSkill);
+router.get('/skills/:userid', getSkills);
 
 module.exports = router;
 
@@ -86,6 +90,34 @@ function deleteAccount(req, res, next) {
   userService
     .deleteAccount(req.body)
     .then(() => res.json({}))
+    .catch(err => next(err));
+}
+
+function assignSkill(req, res, next) {
+  userService
+    .assignSkill(req.params.skillId, req.params.levelId, req.params.userid)
+    .then((m) => res.json(m))
+    .catch(err => next(err));
+}
+
+function removeSkill(req, res, next) {
+  userService
+    .removeSkill(req.params.skillId, req.params.userid)
+    .then((m) => res.json(m))
+    .catch(err => next(err));
+}
+
+function updateSkill(req, res, next) {
+  userService
+    .updateSkill(req.params.id, req.params.skillId, req.params.levelId, req.params.userid)
+    .then((m) => res.json(m))
+    .catch(err => next(err));
+}
+
+function getSkills(req, res, next) {
+  userService
+    .getSkills(req.params.userid)
+    .then((result) => res.json(result))
     .catch(err => next(err));
 }
 

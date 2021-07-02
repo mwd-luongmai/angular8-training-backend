@@ -4,7 +4,8 @@ const skillService = require('./skill.service');
 
 // routes
 router.post('/add-skill', addSkillProflie);
-router.put('/update-skill/:id', update);
+router.put('/update-skill/:id', update)
+router.get('/search/:name', searchSkill)
 router.get('/:id', getById);
 router.get('/', getAll);
 
@@ -30,6 +31,15 @@ function getById(req, res, next) {
     .then(skill => (skill ? res.json(skill) : res.sendStatus(404)))
     .catch(err => next(err));
 }
+
+function searchSkill(req, res, next) {
+  skillService
+    .searchSkill(req.params.name)
+    .then(skill => (skill ? res.json(skill) : res.sendStatus(404)))
+    .catch(err => next(err));
+}
+
+
 
 function update(req, res, next) {
   skillService

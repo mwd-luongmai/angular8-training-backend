@@ -14,6 +14,10 @@ const schema = new Schema({
   createdDate: { type: Date, default: Date.now },
   status: { type: String, default: 'active' },
   resetPasswordToken: { type: String },
+  skills: [{
+    skillProfileId: String,
+    skillLevelId: String
+  }]
 });
 
 schema.set('toJSON', { virtuals: true });
