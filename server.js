@@ -9,7 +9,7 @@ const errorHandler = require('./_helpers/error-handler');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-var whitelist = ["http://localhost:4200"];
+var whitelist = ["http://localhost:4200", "https://mwd-luongmai.github.io"];
 var corsOptionsDelegate = function(req, callback) {
   var corsOptions;
   if (whitelist.indexOf(req.header("Origin")) !== -1) {
