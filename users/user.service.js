@@ -324,7 +324,7 @@ async function forgotPassword(userParam) {
   await user.save();
 
   const address = url.parse(userParam.url, true);
-  const resetUrl = address.protocol + '//' + address.host + '/#/users/reset-password/' + token;
+  const resetUrl ="http://" + address.protocol + '' + address.host + '/user/reset-password/' + token;
   emailUtils.sendMailWithResetPasswordLink(userParam.email, user.username, resetUrl);
 }
 
